@@ -145,6 +145,55 @@ This script installs dependencies, prepares the database, clears logs/tmp, and s
 - Advanced notification system
 - Full-text search across flashcards
 
+## API
+
+### POST /api/v1/generations
+
+Create AI-generated flashcard proposals from source text.
+
+**Authentication:** Session-based (user must be logged in).
+
+**Request:**
+
+```json
+{
+  "source_text": "...1000-10000 characters..."
+}
+```
+
+**Responses:**
+
+| Status | Description |
+|---|---|
+| `201 Created` | Flashcard proposals generated successfully |
+| `400 Bad Request` | Missing or invalid `source_text` (length must be 1 000–10 000) |
+| `401 Unauthorized` | User not authenticated |
+| `422 Unprocessable Entity` | Duplicate `source_text` for this user |
+| `500 Internal Server Error` | AI service or database error |
+
+**Success response (201):**
+
+```json
+{
+  "generation_id": 77,
+  "flashcards_proposals": [
+    { "id": "1", "front": "Generated Question", "back": "Generated Answer", "source": "ai-full" }
+  ],
+  "generated_count": 1
+}
+```
+
+**Error response:**
+
+```json
+{
+  "error": {
+    "code": "invalid_request",
+    "message": "source_text must be between 1000 and 10000 characters"
+  }
+}
+```
+
 ## Project Status
 
 The project is in **early development** (MVP phase). Core scaffolding and infrastructure are in place; feature implementation is underway.
