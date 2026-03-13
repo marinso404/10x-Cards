@@ -1,0 +1,48 @@
+<%# locals: (proposals: [], generation_id: nil) %>
+<section id="proposals-section"
+         data-controller="proposals-list"
+         data-proposals-list-flashcards-url-value="<%= flashcards_path %>"
+         data-proposals-list-generation-id-value="<%= generation_id %>"
+         data-proposals-list-proposal-card-outlet="[data-controller~='proposal-card']"
+         data-proposals-list-status-banner-outlet="#status-banner"
+         data-proposals-list-count-template-value="<%= t('generations.new.proposals.count', selected: '{selected}', total: '{total}') %>"
+         data-proposals-list-save-success-title-value="<%= t('generations.new.status.success_title') %>"
+         data-proposals-list-save-success-body-value="<%= t('generations.new.status.success', count: '{count}') %>"
+         data-proposals-list-save-error-body-value="<%= t('generations.new.status.save_error') %>"
+         data-proposals-list-network-error-body-value="<%= t('generations.new.status.network_error') %>"
+         data-proposals-list-no-selection-title-value="<%= t('generations.new.status.warning_title') %>"
+         data-proposals-list-no-selection-body-value="<%= t('generations.new.bulk_actions.no_selection') %>"
+         data-proposals-list-discarded-title-value="<%= t('generations.new.status.discarded_title') %>"
+         data-proposals-list-discarded-body-value="<%= t('generations.new.status.discarded') %>"
+         data-proposals-list-error-title-value="<%= t('generations.new.status.error_title') %>"
+         class="<%= 'hidden' if proposals.blank? %> space-y-4"
+         data-action="proposal-card:changed->proposals-list#updateCount">
+
+  <%# ── Proposals header ── %>
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+      <%= t("generations.new.proposals.heading") %>
+    </h2>
+    <div class="flex items-center gap-4 text-sm">
+      <span data-proposals-list-target="proposalCount" class="text-gray-600 dark:text-gray-400"></span>
+      <button data-action="click->proposals-list#selectAll"
+              class="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-medium cursor-pointer">
+        <%= t("generations.new.proposals.select_all") %>
+      </button>
+      <button data-action="click->proposals-list#deselectAll"
+              class="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-medium cursor-pointer">
+        <%= t("generations.new.proposals.deselect_all") %>
+      </button>
+    </div>
+  </div>
+
+  <%# ── Proposal cards ── %>
+  <div data-proposals-list-target="cardsList" class="space-y-3">
+    <% proposals.each do |proposal| %>
+      <%= render "generations/proposal_card", proposal: %>
+    <% end %>
+  </div>
+
+  <%# ── Bulk actions ── %>
+  <%= render "generations/bulk_actions" %>
+</section>

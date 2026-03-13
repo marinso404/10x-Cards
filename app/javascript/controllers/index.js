@@ -7,5 +7,17 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import GenerationsNewController from "./generations_new_controller"
-application.register("generations-new", GenerationsNewController)
+import StatusBannerController from "./status_banner_controller"
+application.register("status-banner", StatusBannerController)
+
+import CharCounterController from "./char_counter_controller"
+application.register("char-counter", CharCounterController)
+
+import GenerationFormController from "./generation_form_controller"
+application.register("generation-form", GenerationFormController)
+
+import ProposalsListController from "./proposals_list_controller"
+application.register("proposals-list", ProposalsListController)
+
+import ProposalCardController from "./proposal_card_controller"
+application.register("proposal-card", ProposalCardController)

@@ -69,6 +69,8 @@ en:
         back_label: "Back"
         front_error: "Front must be 1–200 characters"
         back_error: "Back must be 1–500 characters"
+        edited_badge: "Edited"
+        select_proposal: "Select proposal"
       bulk_actions:
         save_selected: "Save Selected"
         discard_all: "Discard All"
@@ -77,6 +79,11 @@ en:
         no_selection: "Select at least one proposal to save"
       status:
         success: "Successfully saved %{count} flashcards!"
+        success_title: "Saved!"
+        error_title: "Error"
+        warning_title: "Warning"
+        discarded_title: "Discarded"
+        dismiss: "Dismiss"
         generation_error: "Failed to generate proposals. Please try again."
         save_error: "Failed to save flashcards. Please try again."
         network_error: "Network error. Please check your connection and try again."

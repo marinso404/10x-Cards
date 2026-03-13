@@ -1,0 +1,53 @@
+<section class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+  <%= form_with url: generations_path,
+    data: {
+      action: "submit->generation-form#validate turbo:submit-start->generation-form#showLoader turbo:submit-end->generation-form#hideLoader"
+    } do %>
+    <label for="source_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+      <%= t("generations.new.source_text.label") %>
+    </label>
+
+    <div data-controller="char-counter"
+         data-char-counter-max-value="10000"
+         data-char-counter-template-value="<%= t('generations.new.source_text.hint', count: '{count}', max: '{max}') %>">
+      <textarea id="source_text"
+                name="source_text"
+                data-generation-form-target="sourceText"
+                data-char-counter-target="input"
+                data-action="input->char-counter#update"
+                required
+                minlength="1000"
+                maxlength="10000"
+                rows="10"
+                placeholder="<%= t('generations.new.source_text.placeholder') %>"
+                class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700
+                       text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500
+                       px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                       disabled:opacity-50 disabled:cursor-not-allowed resize-y"></textarea>
+
+      <div class="flex items-center justify-between mt-2">
+        <span data-char-counter-target="display"
+              class="text-sm text-gray-500 dark:text-gray-400">
+          <%= t("generations.new.source_text.hint", count: 0, max: number_with_delimiter(10_000)) %>
+        </span>
+
+        <span data-generation-form-target="fieldError"
+              class="text-sm text-red-600 dark:text-red-400 hidden"
+              role="alert"></span>
+      </div>
+    </div>
+
+    <button type="submit"
+            data-generation-form-target="submitBtn"
+            class="mt-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold
+                   text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
+                   focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+      <svg data-generation-form-target="submitSpinner"
+           class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <%= t("generations.new.source_text.submit") %>
+    </button>
+  <% end %>
+</section>

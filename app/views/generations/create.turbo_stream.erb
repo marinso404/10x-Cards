@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "proposals-section" do %>
+  <%= render "generations/proposals_section", proposals: @proposals, generation_id: @generation_id %>
+<% end %>
+
+<%= turbo_stream.replace "status-banner" do %>
+  <%= render "generations/status_banner" %>
+<% end %>

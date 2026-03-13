@@ -19,6 +19,13 @@ class ApplicationController < ActionController::Base
     return if current_user
 
     respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          'status-banner',
+          partial: 'generations/status_banner',
+          locals: { kind: 'error', title: I18n.t('api.errors.unauthorized'), body: I18n.t('api.errors.unauthorized') }
+        ), status: :unprocessable_entity
+      end
       format.json do
         render json: {
           error: { code: 'unauthorized', message: I18n.t('api.errors.unauthorized') }

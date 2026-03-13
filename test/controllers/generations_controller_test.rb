@@ -15,7 +15,7 @@ class GenerationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select 'h1', I18n.t('generations.new.title')
     assert_select 'textarea#source_text'
-    assert_select '[data-controller="generations-new"]'
+    assert_select '[data-controller="generation-form"]'
   end
 
   # ── POST /generations ──────────────────────────────────
