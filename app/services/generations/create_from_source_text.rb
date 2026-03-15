@@ -58,11 +58,11 @@ module Generations
       })
     rescue ActiveRecord::RecordNotUnique
       Rails.logger.warn("[Generations] Duplicate source_text_hash for user_id=#{user.id}")
-      Result.failure(errors: ['Duplicate source text for this user'], error_code: :duplicate)
+      Result.failure(errors: [ 'Duplicate source text for this user' ], error_code: :duplicate)
     rescue StandardError => e
       Rails.logger.error("[Generations] Unexpected error for user_id=#{user.id}: #{e.class} — #{e.message}")
       log_error_safe(generation, e)
-      Result.failure(errors: ['Generation failed'], error_code: :generation_failed)
+      Result.failure(errors: [ 'Generation failed' ], error_code: :generation_failed)
     end
 
     private
@@ -78,10 +78,16 @@ module Generations
       )
     end
 
-    # ── AI Client (MOCK) ─────────────────────────────────────
-    # TODO: Zastąpić prawdziwym Ai::OpenrouterClient po integracji.
+    # ── AI Client ───────────────────────────────────────────
     def fetch_ai_proposals
-      Ai::OpenrouterClient.generate_flashcards(source_text)
+      client = Ai::OpenrouterClient.new
+      result = client.generate_flashcards(source_text:)
+
+      if result.success?
+        { success: true, proposals: result.data[:proposals], model: result.data[:model] }
+      else
+        { success: false, error_code: result.error_code.to_s, error_message: result.errors.join(', ') }
+      end
     end
 
     # ── Error logging ────────────────────────────────────────
